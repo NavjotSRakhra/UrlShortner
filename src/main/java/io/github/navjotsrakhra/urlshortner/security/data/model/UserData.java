@@ -33,6 +33,8 @@ public class UserData implements UserDetails {
     @NonNull
     private final List<Role> roles;
     @NonNull
+    private String email;
+    @NonNull
     private String password;
     @NonNull
     private boolean accountExpired;

@@ -12,7 +12,9 @@
     <artifactId>URLShortner</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>URLShortner</name>
-    <description>URLShortner</description>
+    <description>
+        URL Shortner: A simple URL shortner service
+    </description>
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -51,10 +53,6 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
@@ -74,8 +72,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -111,5 +113,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
