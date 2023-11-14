@@ -30,15 +30,19 @@ public class UrlMapping {
     public UrlMapping() {
     }
 
-    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, @NotNull Instant expiresAt) {
+    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt) {
         this(id, longUrl, key, owner, active, permanent, expiresAt, Instant.now(), 0L);
     }
 
     public UrlMapping(String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {
-        this(UUID.randomUUID(), longUrl, key, owner, active, permanent, expiresAt, createdAt, accessCount);
+        this(null, longUrl, key, owner, active, permanent, expiresAt, createdAt, accessCount);
     }
 
-    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, @NotNull Instant expiresAt, @NotNull Instant createdAt, Long accessCount) {
+    public UrlMapping(String longUrl, String key, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {
+        this(null, longUrl, key, null, active, permanent, expiresAt, createdAt, accessCount);
+    }
+
+    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {
         this.id = id;
         this.longUrl = longUrl;
         this.key = key;
@@ -49,6 +53,7 @@ public class UrlMapping {
         this.createdAt = createdAt;
         this.accessCount = accessCount;
     }
+
 
     public UrlMappingDTO toUrlMappingDTO() {
         return new UrlMappingDTO(id, longUrl, key, active, permanent, expiresAt, createdAt, accessCount);

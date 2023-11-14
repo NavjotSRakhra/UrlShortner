@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public record UrlMappingDTO(UUID id, String longUrl, String key, Boolean active, Boolean permanent, Instant expiresAt,
                             Instant createdAt, Long accessCount) {
-    public UrlMapping toUrlMapping(String owner) {
-        return new UrlMapping(longUrl, key, owner, active, permanent, expiresAt, createdAt, accessCount);
+    public UrlMapping toUrlMapping() {
+        return new UrlMapping(longUrl, key, active, permanent, expiresAt, createdAt, accessCount);
     }
 }
