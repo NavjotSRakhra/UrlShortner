@@ -7,10 +7,12 @@ package io.github.navjotsrakhra.urlshortner.security.repository;
 import io.github.navjotsrakhra.urlshortner.security.data.model.UserData;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * The UserRepository interface provides data access methods for interacting with UserData entities.
  */
+@Repository
 public interface UserRepository extends ListCrudRepository<UserData, Long>, PagingAndSortingRepository<UserData, Long> {
 
     /**
