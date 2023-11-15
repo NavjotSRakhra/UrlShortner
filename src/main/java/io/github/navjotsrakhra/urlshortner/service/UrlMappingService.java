@@ -61,10 +61,7 @@ public class UrlMappingService {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        urlMappingFromDb.setLongUrl(urlMapping.getLongUrl());
-        urlMappingFromDb.setActive(urlMapping.getActive());
-        urlMappingFromDb.setPermanent(urlMapping.getPermanent());
-        urlMappingFromDb.setExpiresAt(urlMapping.getExpiresAt());
+        updateDbData(urlMapping, urlMappingFromDb);
 
         urlMappingRepository.save(urlMappingFromDb);
 
@@ -72,7 +69,7 @@ public class UrlMappingService {
     }
 
     public ResponseEntity<UrlMappingDTO> createUrlMapping(UrlMapping urlMapping, String name) {
-        urlMapping.setOwner(name);
+        urlMapping = new UrlMapping(urlMapping.getLongUrl(), urlMapping.getKey(), name, urlMapping.getActive(), urlMapping.getPermanent(), urlMapping.getExpiresAt());
 
         // Validate the urlMapping object.
         try {
@@ -99,5 +96,10 @@ public class UrlMappingService {
                         )
                         .toList()
         );
+    }
+
+    private void updateDbData(UrlMapping urlMapping, UrlMapping urlMappingFromDb) {
+        urlMappingFromDb.setLongUrl(urlMapping.getLongUrl());
+        urlMappingFromDb.setActive(urlMapping.getActive());
     }
 }

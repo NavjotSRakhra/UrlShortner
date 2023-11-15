@@ -18,16 +18,18 @@ public class ShortenedUrlRedirectionService {
     public ResponseEntity<Void> redirect(String key) {
         var urlMapping = urlMappingRepository.findNotExpiredByKey(key);
 
-        if (urlMapping == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity
-                .status(HttpStatus.SEE_OTHER)
-                .location(
-                        URI.create(
-                                urlMapping.getLongUrl()
-                        )
+        return urlMapping.<ResponseEntity<Void>>map(
+                        mapping -> ResponseEntity
+                                .status(HttpStatus.SEE_OTHER)
+                                .location(
+                                        URI.create(
+                                                mapping.getLongUrl()
+                                        )
+                                )
+                                .build()
                 )
-                .build();
+                .orElseGet(
+                        () -> ResponseEntity.notFound().build()
+                );
     }
 }

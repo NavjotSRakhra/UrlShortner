@@ -30,8 +30,8 @@ public class UrlMapping {
     public UrlMapping() {
     }
 
-    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt) {
-        this(id, longUrl, key, owner, active, permanent, expiresAt, Instant.now(), 0L);
+    public UrlMapping(String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt) {
+        this(null, longUrl, key, owner, active, permanent, expiresAt, Instant.now(), 0L);
     }
 
     public UrlMapping(String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {

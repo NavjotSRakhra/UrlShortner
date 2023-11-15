@@ -37,10 +37,10 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/*").permitAll()
+                        .requestMatchers("/*", "/static/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                        .loginPage("/login.html")
+                        .loginPage("/static/login.html")
                         .loginProcessingUrl("/login")
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
