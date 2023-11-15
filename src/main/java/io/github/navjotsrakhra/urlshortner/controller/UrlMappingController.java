@@ -18,13 +18,13 @@ public class UrlMappingController {
     }
 
     @GetMapping("/{key}")
-    public ResponseEntity<UrlMappingDTO> getUrlByKey(@PathVariable String key) {
-        return urlMappingService.getUrlByKey(key);
+    public ResponseEntity<UrlMappingDTO> getUrlByKey(@PathVariable String key, Principal principal) {
+        return urlMappingService.getUrlByKey(key, principal.getName());
     }
 
     @DeleteMapping("/{key}")
-    public ResponseEntity<Void> deleteUrlById(@PathVariable String key) {
-        return urlMappingService.deleteUrlByKey(key);
+    public ResponseEntity<Void> deleteUrlById(@PathVariable String key, Principal principal) {
+        return urlMappingService.deleteUrlByKey(key, principal.getName());
     }
 
     @PatchMapping("/{key}")

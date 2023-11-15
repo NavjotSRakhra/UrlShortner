@@ -16,7 +16,7 @@ public class ShortenedUrlRedirectionService {
     }
 
     public ResponseEntity<Void> redirect(String key) {
-        var urlMapping = urlMappingRepository.findNotExpiredByKey(key);
+        var urlMapping = urlMappingRepository.findActiveByKey(key);
 
         return urlMapping.<ResponseEntity<Void>>map(
                         mapping -> ResponseEntity

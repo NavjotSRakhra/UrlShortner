@@ -19,7 +19,8 @@ public class UrlMapping {
     private @Id UUID id;
     @Column(columnDefinition = "TEXT")
     private @NotEmpty @URL String longUrl;
-    private @NotEmpty String key;
+    private @NotEmpty
+    @Column(unique = true) String key;
     private @NotEmpty String owner;
     private @NotNull Boolean active;
     private @NotNull Boolean permanent;

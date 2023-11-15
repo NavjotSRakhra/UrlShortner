@@ -21,10 +21,12 @@ public interface UrlMappingRepository extends CrudRepository<UrlMapping, UUID> {
                 OR
                 u.expiresAt > CURRENT_TIMESTAMP
             )
+            AND 
+            u.active = TRUE
             """)
-    Optional<UrlMapping> findNotExpiredByKey(String key);
+    Optional<UrlMapping> findActiveByKey(String key);
 
-    Optional<UrlMapping> findByKey(String key);
+    Optional<UrlMapping> findByKeyAndOwner(String key, String owner);
 
     List<UrlMapping> findAllByOwner(String owner);
 }

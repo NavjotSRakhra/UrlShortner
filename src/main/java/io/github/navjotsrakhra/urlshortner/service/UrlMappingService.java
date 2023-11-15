@@ -5,7 +5,8 @@ import io.github.navjotsrakhra.urlshortner.data.model.dto.UrlMappingDTO;
 import io.github.navjotsrakhra.urlshortner.repository.UrlMappingRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.Validator;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +16,15 @@ import java.util.List;
 public class UrlMappingService {
     private final UrlMappingRepository urlMappingRepository;
     private final Validator validator;
+    private final Logger log = LoggerFactory.getLogger(UrlMappingService.class);
 
     public UrlMappingService(UrlMappingRepository urlMappingRepository, Validator validator) {
         this.urlMappingRepository = urlMappingRepository;
         this.validator = validator;
     }
 
-    public ResponseEntity<UrlMappingDTO> getUrlByKey(String key) {
-        var urlMapping = urlMappingRepository.findByKey(key);
+    public ResponseEntity<UrlMappingDTO> getUrlByKey(String key, String owner) {
+        var urlMapping = urlMappingRepository.findByKeyAndOwner(key, owner);
 
         return urlMapping.map(
                 mapping ->
@@ -35,8 +37,8 @@ public class UrlMappingService {
 
     }
 
-    public ResponseEntity<Void> deleteUrlByKey(String key) {
-        var urlMapping = urlMappingRepository.findByKey(key);
+    public ResponseEntity<Void> deleteUrlByKey(String key, String owner) {
+        var urlMapping = urlMappingRepository.findByKeyAndOwner(key, owner);
 
         if (urlMapping.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -48,19 +50,14 @@ public class UrlMappingService {
     }
 
 
-    public ResponseEntity<Void> updateUrlByKeyIfOwner(String id, @Valid UrlMapping urlMapping, String name) {
-        var urlMappingOptional = urlMappingRepository.findByKey(id);
+    public ResponseEntity<Void> updateUrlByKeyIfOwner(String id, @Valid UrlMapping urlMapping, String owner) {
+        var urlMappingOptional = urlMappingRepository.findByKeyAndOwner(id, owner);
 
         if (urlMappingOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         var urlMappingFromDb = urlMappingOptional.get();
-
-        if (!urlMappingFromDb.getOwner().equals(name)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         updateDbData(urlMapping, urlMappingFromDb);
 
         urlMappingRepository.save(urlMappingFromDb);
@@ -68,18 +65,11 @@ public class UrlMappingService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<UrlMappingDTO> createUrlMapping(UrlMapping urlMapping, String name) {
-        urlMapping = new UrlMapping(urlMapping.getLongUrl(), urlMapping.getKey(), name, urlMapping.getActive(), urlMapping.getPermanent(), urlMapping.getExpiresAt());
+    public ResponseEntity<UrlMappingDTO> createUrlMapping(UrlMapping urlMapping, String owner) {
+        urlMapping = new UrlMapping(urlMapping.getLongUrl(), urlMapping.getKey(), owner, urlMapping.getActive(), urlMapping.getPermanent(), urlMapping.getExpiresAt());
 
-        // Validate the urlMapping object.
-        try {
-            var violations = validator.validate(urlMapping);
-            if (!violations.isEmpty()) {
-                return ResponseEntity.badRequest().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        ResponseEntity<UrlMappingDTO> build = validateUrlMapping(urlMapping);
+        if (build != null) return build;
 
         urlMappingRepository.save(urlMapping);
 
@@ -96,6 +86,22 @@ public class UrlMappingService {
                         )
                         .toList()
         );
+    }
+
+    private ResponseEntity<UrlMappingDTO> validateUrlMapping(UrlMapping urlMapping) {
+        // Validate the urlMapping object.
+        try {
+            var violations = validator.validate(urlMapping);
+            if (!violations.isEmpty()) {
+                violations.forEach(
+                        violation -> log.error(violation.toString())
+                );
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return null;
     }
 
     private void updateDbData(UrlMapping urlMapping, UrlMapping urlMappingFromDb) {
