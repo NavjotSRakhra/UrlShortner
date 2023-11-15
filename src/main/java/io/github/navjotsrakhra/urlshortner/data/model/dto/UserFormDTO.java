@@ -12,6 +12,6 @@ import java.util.List;
 public record UserFormDTO(@NotNull @NotBlank String username, @NotNull @NotBlank String password,
                           @NotNull @NotBlank @Email String email) {
     public UserData toUserData(PasswordEncoder encoder) {
-        return new UserData(username, List.of(Role.USER), encoder.encode(password), email, false, false, false);
+        return new UserData(username, List.of(Role.USER), email, encoder.encode(password), false, false, false);
     }
 }

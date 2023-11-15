@@ -39,6 +39,7 @@ public class UserRegistrationService {
      */
     public ResponseEntity<Void> saveUserWithDefaultRole(@Valid UserFormDTO userFormDTO) throws UserNameTakenException {
         var user = userFormDTO.toUserData(encoder);
+        log.trace("Encoder class {}", encoder.getClass());
         try {
             repository.save(user);
         } catch (Exception e) {
@@ -49,7 +50,7 @@ public class UserRegistrationService {
         }
         log.info("User registered: {}", user.getUsername());
         return ResponseEntity.status(HttpStatus.SEE_OTHER)
-                .header("Location", "/login.html")
+                .header("Location", "static/login.html")
                 .build();
     }
 }
