@@ -2,11 +2,14 @@ package io.github.navjotsrakhra.urlshortner.controller;
 
 import io.github.navjotsrakhra.urlshortner.data.model.dto.UrlMappingDTO;
 import io.github.navjotsrakhra.urlshortner.service.UrlMappingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/manage/url")
@@ -38,7 +41,7 @@ public class UrlMappingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UrlMappingDTO>> getAllUrlsOwnedByCurrentUser(Principal principal) {
-        return urlMappingService.getAllUrlsOwnedByCurrentUser(principal.getName());
+    public ResponseEntity<Page<UrlMappingDTO>> getAllUrlsOwnedByCurrentUser(Principal principal, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) { //TODO Paginate
+        return urlMappingService.getAllUrlsOwnedByCurrentUser(principal.getName(), pageable);
     }
 }

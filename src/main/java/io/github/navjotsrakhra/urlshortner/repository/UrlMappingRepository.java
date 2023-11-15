@@ -1,11 +1,12 @@
 package io.github.navjotsrakhra.urlshortner.repository;
 
 import io.github.navjotsrakhra.urlshortner.data.model.UrlMapping;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +29,5 @@ public interface UrlMappingRepository extends CrudRepository<UrlMapping, UUID> {
 
     Optional<UrlMapping> findByKeyAndOwner(String key, String owner);
 
-    List<UrlMapping> findAllByOwner(String owner);
+    Page<UrlMapping> findAllByOwner(String owner, Pageable pageable);
 }

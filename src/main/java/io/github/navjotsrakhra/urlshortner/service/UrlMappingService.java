@@ -7,10 +7,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UrlMappingService {
@@ -76,15 +76,14 @@ public class UrlMappingService {
         return ResponseEntity.ok(urlMapping.toUrlMappingDTO());
     }
 
-    public ResponseEntity<List<UrlMappingDTO>> getAllUrlsOwnedByCurrentUser(String name) {
-        var urlMappings = urlMappingRepository.findAllByOwner(name);
+    public ResponseEntity<Page<UrlMappingDTO>> getAllUrlsOwnedByCurrentUser(String name, Pageable pageable) {
+        var urlMappings = urlMappingRepository.findAllByOwner(name, pageable);
 
         return ResponseEntity.ok(
-                urlMappings.stream()
+                urlMappings
                         .map(
                                 UrlMapping::toUrlMappingDTO
                         )
-                        .toList()
         );
     }
 
