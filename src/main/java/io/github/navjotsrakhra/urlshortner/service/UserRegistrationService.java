@@ -50,7 +50,7 @@ public class UserRegistrationService {
         }
         log.info("User registered: {}", user.getUsername());
         return ResponseEntity.status(HttpStatus.SEE_OTHER)
-                .header("Location", "static/login.html")
+                .header("Location", "static/login")
                 .build();
     }
 }

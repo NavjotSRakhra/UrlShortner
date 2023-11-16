@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/*", "/static/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                        .loginPage("/static/login.html")
+                        .loginPage("/static/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/static/index.html", true)
                 )
