@@ -22,12 +22,23 @@ public interface UrlMappingRepository extends CrudRepository<UrlMapping, UUID> {
                 OR
                 u.expiresAt > CURRENT_TIMESTAMP
             )
-            AND 
+            AND
             u.active = TRUE
             """)
     Optional<UrlMapping> findActiveByKey(String key);
 
     Optional<UrlMapping> findByKeyAndOwner(String key, String owner);
 
-    Page<UrlMapping> findAllByOwner(String owner, Pageable pageable);
+    @Query("""
+            SELECT u
+            FROM UrlMapping u
+            WHERE
+            u.owner = :owner
+            AND (
+                u.permanent = TRUE
+                OR
+                u.expiresAt > CURRENT_TIMESTAMP
+            )
+            """)
+    Page<UrlMapping> findAllNotExpiredByOwner(String owner, Pageable pageable);
 }

@@ -77,7 +77,7 @@ public class UrlMappingService {
     }
 
     public ResponseEntity<Page<UrlMappingDTO>> getAllUrlsOwnedByCurrentUser(String name, Pageable pageable) {
-        var urlMappings = urlMappingRepository.findAllByOwner(name, pageable);
+        var urlMappings = urlMappingRepository.findAllNotExpiredByOwner(name, pageable);
 
         return ResponseEntity.ok(
                 urlMappings
