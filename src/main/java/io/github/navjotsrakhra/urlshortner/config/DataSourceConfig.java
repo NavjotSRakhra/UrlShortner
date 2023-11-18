@@ -20,7 +20,6 @@ public class DataSourceConfig {
     @Bean
     public DataSource getDataSource() {
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("org.postgresql.Driver");
         dataSourceBuilder.url(System.getenv("db_url"));
         dataSourceBuilder.username(System.getenv("dn_user"));
         dataSourceBuilder.password(System.getenv("db_pass"));
