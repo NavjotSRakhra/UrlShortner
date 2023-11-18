@@ -8,16 +8,17 @@ COPY pom.xml .
 COPY mvnw .
 
 RUN chmod +x mvnw
-RUN ./mvnw install -DskipTests
+RUN ./mvnw native:compile -Pnative
+RUN chmod +x target/app
 
 FROM ghcr.io/graalvm/graalvm-community:21
 LABEL authors="Navjot S. Rakhra"
 
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/app .
 
 ENV PORT=8080
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["./app"]
