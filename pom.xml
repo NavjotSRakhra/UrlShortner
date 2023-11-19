@@ -109,6 +109,7 @@
                     <imageName>app</imageName>
                     <buildArgs>
                         <buildArg>-J-Xmx8g</buildArg>
+                        <buildArg>-march=native</buildArg>
                     </buildArgs>
                 </configuration>
             </plugin>

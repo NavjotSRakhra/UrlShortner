@@ -11,7 +11,7 @@ RUN chmod +x mvnw
 RUN ./mvnw native:compile -Pnative
 RUN chmod +x target/app
 
-FROM ghcr.io/graalvm/graalvm-community:21
+FROM ubuntu:latest
 LABEL authors="Navjot S. Rakhra"
 
 WORKDIR /app
