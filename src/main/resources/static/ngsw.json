@@ -1,0 +1,99 @@
+{
+  "configVersion": 1,
+  "timestamp": 1700425013308,
+  "index": "/static/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/static/chunk-AO4APA6E.js",
+        "/static/chunk-D2BBXM5P.js",
+        "/static/chunk-FHW4FQOC.js",
+        "/static/chunk-FRXB3YGR.js",
+        "/static/chunk-LTHMUX2P.js",
+        "/static/chunk-NMG2UWF5.js",
+        "/static/chunk-OFXO3MZN.js",
+        "/static/chunk-RKQUBJZW.js",
+        "/static/chunk-XBJKUZ2Z.js",
+        "/static/favicon.ico",
+        "/static/main-SOTGRMTB.js",
+        "/static/manifest.webmanifest",
+        "/static/polyfills-LZBJRJJE.js",
+        "/static/styles-VTXOHU43.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/static/assets/_c30455b2-828c-4f03-9898-20bb951a8ba1.jpeg",
+        "/static/assets/icons/icon-128x128.png",
+        "/static/assets/icons/icon-144x144.png",
+        "/static/assets/icons/icon-152x152.png",
+        "/static/assets/icons/icon-192x192.png",
+        "/static/assets/icons/icon-384x384.png",
+        "/static/assets/icons/icon-512x512.png",
+        "/static/assets/icons/icon-72x72.png",
+        "/static/assets/icons/icon-96x96.png",
+        "/static/media/_c30455b2-828c-4f03-9898-20bb951a8ba1-EXZJCFNV.jpeg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/static/assets/_c30455b2-828c-4f03-9898-20bb951a8ba1.jpeg": "ae610ababeecdbf9e2c6b1178f2168c494e241af",
+    "/static/assets/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "/static/assets/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "/static/assets/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "/static/assets/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "/static/assets/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "/static/assets/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "/static/assets/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "/static/assets/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/static/chunk-AO4APA6E.js": "c36a4f72e2ce3c91578c380a568d6f20ab534698",
+    "/static/chunk-D2BBXM5P.js": "1e9990969c776706280c47423356934de7885f91",
+    "/static/chunk-FHW4FQOC.js": "882ac46d26af1b8a5013b0195e57630431a44f93",
+    "/static/chunk-FRXB3YGR.js": "a26926c9923d868ca46faaac9922a2f669a0e479",
+    "/static/chunk-LTHMUX2P.js": "562d1eef724ecb02f660d5f71f999e80c960680c",
+    "/static/chunk-NMG2UWF5.js": "4b0143ee227b9003a418db3f9594812a44ea2d7a",
+    "/static/chunk-OFXO3MZN.js": "1c089399649ed0209f084223c61dcd330691f7e0",
+    "/static/chunk-RKQUBJZW.js": "aa0939c199150212cc77b77753f2715686086da8",
+    "/static/chunk-XBJKUZ2Z.js": "a13a9321a8f93fb88ebbab8029ec2c034bac40e2",
+    "/static/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/static/main-SOTGRMTB.js": "4b3b2e4d705fea6772a3b9f1f49d2c1f8822a842",
+    "/static/manifest.webmanifest": "53d09c4bc04f5baa2612be8e0a4eb441743ea952",
+    "/static/media/_c30455b2-828c-4f03-9898-20bb951a8ba1-EXZJCFNV.jpeg": "ae610ababeecdbf9e2c6b1178f2168c494e241af",
+    "/static/polyfills-LZBJRJJE.js": "fda1c82c5c620f1fa442f687b3df45a037f6fcc9",
+    "/static/styles-VTXOHU43.css": "772c7ff9c378f53a4ec865bb3af29417cab18b55"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
