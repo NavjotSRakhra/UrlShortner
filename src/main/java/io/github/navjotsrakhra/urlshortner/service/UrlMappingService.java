@@ -107,4 +107,8 @@ public class UrlMappingService {
         urlMappingFromDb.setLongUrl(urlMapping.getLongUrl());
         urlMappingFromDb.setActive(urlMapping.getActive());
     }
+
+    public void deleteExpiredUrls() {
+        urlMappingRepository.deleteUrlMappingByExpiresAtBeforeAndPermanentIsFalse(java.time.Instant.now());
+    }
 }

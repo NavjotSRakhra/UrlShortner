@@ -25,8 +25,8 @@ public class UrlMapping {
     private @NotNull Boolean active;
     private @NotNull Boolean permanent;
     private @NotNull Instant expiresAt;
-    private @NotNull Instant createdAt; // Not to be intialized by the user
-    private @NotNull Long accessCount; // Not to be intialized by the user
+    private @NotNull Instant createdAt; // Not to be initialized by the user
+    private @NotNull Long accessCount; // Not to be initialized by the user
 
     public UrlMapping() {
     }
