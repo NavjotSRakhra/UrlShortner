@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1700425013308,
+  "timestamp": 1700733624097,
   "index": "/static/index.html",
   "assetGroups": [
     {
@@ -72,7 +72,7 @@
     "/static/chunk-XBJKUZ2Z.js": "a13a9321a8f93fb88ebbab8029ec2c034bac40e2",
     "/static/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/static/main-SOTGRMTB.js": "4b3b2e4d705fea6772a3b9f1f49d2c1f8822a842",
-    "/static/manifest.webmanifest": "53d09c4bc04f5baa2612be8e0a4eb441743ea952",
+    "/static/manifest.webmanifest": "d5a6da957c2431d812eba1f8543543be812d162e",
     "/static/media/_c30455b2-828c-4f03-9898-20bb951a8ba1-EXZJCFNV.jpeg": "ae610ababeecdbf9e2c6b1178f2168c494e241af",
     "/static/polyfills-LZBJRJJE.js": "fda1c82c5c620f1fa442f687b3df45a037f6fcc9",
     "/static/styles-VTXOHU43.css": "772c7ff9c378f53a4ec865bb3af29417cab18b55"
