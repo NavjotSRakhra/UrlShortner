@@ -6,12 +6,10 @@ import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-@Component
 public class KeepActiveScheduledService {
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     public void keepActive() {
