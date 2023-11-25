@@ -18,7 +18,6 @@ public class KeepActiveScheduledService {
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(RequestConfig.DEFAULT).build()) {
             HttpGet get = new HttpGet(url);
             var response = httpClient.execute(get);
-            System.out.println(response.getEntity().getContent().toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package io.github.navjotsrakhra.urlshortner.service;
 
 import io.github.navjotsrakhra.urlshortner.data.model.UrlMapping;
+import io.github.navjotsrakhra.urlshortner.repository.TrafficRepository;
 import io.github.navjotsrakhra.urlshortner.repository.UrlMappingRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,11 @@ import java.net.URI;
 @Service
 public class ShortenedUrlRedirectionService {
     private final UrlMappingRepository urlMappingRepository;
+    private final TrafficRepository trafficRepository;
 
-    public ShortenedUrlRedirectionService(UrlMappingRepository urlMappingRepository) {
+    public ShortenedUrlRedirectionService(UrlMappingRepository urlMappingRepository, TrafficRepository trafficRepository) {
         this.urlMappingRepository = urlMappingRepository;
+        this.trafficRepository = trafficRepository;
     }
 
     public ResponseEntity<Void> redirect(String key) {
@@ -39,7 +42,8 @@ public class ShortenedUrlRedirectionService {
 
     @Transactional
     public void updateCount(UrlMapping urlMapping) {
-        urlMapping.setAccessCount(urlMapping.getAccessCount() + 1);
-        urlMappingRepository.save(urlMapping);
+        var traffic = urlMapping.getTraffic();
+        traffic.visited("Unknown");
+        trafficRepository.save(traffic);
     }
 }

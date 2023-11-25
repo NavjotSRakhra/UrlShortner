@@ -9,7 +9,6 @@ import org.hibernate.id.uuid.UuidGenerator;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.Instant;
-import java.util.StringJoiner;
 import java.util.UUID;
 
 @Entity
@@ -26,24 +25,26 @@ public class UrlMapping {
     private @NotNull Boolean permanent;
     private @NotNull Instant expiresAt;
     private @NotNull Instant createdAt; // Not to be initialized by the user
-    private @NotNull Long accessCount; // Not to be initialized by the user
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "traffic_id", referencedColumnName = "id")
+    private @NotNull Traffic traffic;
 
     public UrlMapping() {
     }
 
     public UrlMapping(String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt) {
-        this(null, longUrl, key, owner, active, permanent, expiresAt, Instant.now(), 0L);
+        this(null, longUrl, key, owner, active, permanent, expiresAt, Instant.now());
     }
 
-    public UrlMapping(String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {
-        this(null, longUrl, key, owner, active, permanent, expiresAt, createdAt, accessCount);
+    public UrlMapping(String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt) {
+        this(null, longUrl, key, owner, active, permanent, expiresAt, createdAt);
     }
 
-    public UrlMapping(String longUrl, String key, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {
-        this(null, longUrl, key, null, active, permanent, expiresAt, createdAt, accessCount);
+    public UrlMapping(String longUrl, String key, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt) {
+        this(null, longUrl, key, null, active, permanent, expiresAt, createdAt);
     }
 
-    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt, Long accessCount) {
+    public UrlMapping(UUID id, String longUrl, String key, String owner, Boolean active, Boolean permanent, Instant expiresAt, Instant createdAt) {
         this.id = id;
         this.longUrl = longUrl;
         this.key = key;
@@ -52,12 +53,13 @@ public class UrlMapping {
         this.permanent = permanent;
         this.expiresAt = expiresAt;
         this.createdAt = createdAt;
-        this.accessCount = accessCount;
+
+        traffic = new Traffic();
     }
 
 
     public UrlMappingDTO toUrlMappingDTO() {
-        return new UrlMappingDTO(id, longUrl, key, active, permanent, expiresAt, createdAt, accessCount);
+        return new UrlMappingDTO(id, longUrl, key, active, permanent, expiresAt, createdAt, traffic.getCount());
     }
 
     @Override
@@ -73,7 +75,22 @@ public class UrlMapping {
         if (!getPermanent().equals(that.getPermanent())) return false;
         if (!getExpiresAt().equals(that.getExpiresAt())) return false;
         if (!getCreatedAt().equals(that.getCreatedAt())) return false;
-        return getAccessCount().equals(that.getAccessCount());
+        return getTraffic().equals(that.getTraffic());
+    }
+
+    @Override
+    public String toString() {
+        return "UrlMapping{" +
+                "id=" + id +
+                ", longUrl='" + longUrl + '\'' +
+                ", key='" + key + '\'' +
+                ", owner='" + owner + '\'' +
+                ", active=" + active +
+                ", permanent=" + permanent +
+                ", expiresAt=" + expiresAt +
+                ", createdAt=" + createdAt +
+                ", traffic=" + traffic +
+                '}';
     }
 
     @Override
@@ -86,24 +103,10 @@ public class UrlMapping {
         result = 31 * result + getPermanent().hashCode();
         result = 31 * result + getExpiresAt().hashCode();
         result = 31 * result + getCreatedAt().hashCode();
-        result = 31 * result + getAccessCount().hashCode();
+        result = 31 * result + getTraffic().hashCode();
         return result;
     }
 
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", UrlMapping.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("key='" + key + "'")
-                .add("longUrl='" + longUrl + "'")
-                .add("owner='" + owner + "'")
-                .add("isActive=" + active)
-                .add("isPermanent=" + permanent)
-                .add("expiresAt=" + expiresAt)
-                .add("createdAt=" + createdAt)
-                .add("accessCount=" + accessCount)
-                .toString();
-    }
     // Below are the getters and setters for the UrlMapping class.
 
     public UUID getId() {
@@ -170,11 +173,12 @@ public class UrlMapping {
         this.createdAt = createdAt;
     }
 
-    public Long getAccessCount() {
-        return accessCount;
+    public Traffic getTraffic() {
+        return traffic;
     }
 
-    public void setAccessCount(Long accessCount) {
-        this.accessCount = accessCount;
+    public void setTraffic(Traffic traffic) {
+        this.traffic = traffic;
     }
+
 }

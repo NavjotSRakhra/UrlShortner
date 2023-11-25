@@ -18,6 +18,6 @@ public record UrlMappingDTO(UUID id, @NotNull @URL String longUrl, @NotNull Stri
     }
 
     public UrlMapping toUrlMapping() {
-        return new UrlMapping(longUrl, key, active, permanent, expiresAt, createdAt, accessCount);
+        return new UrlMapping(longUrl, key, active, permanent, expiresAt, createdAt);
     }
 }
