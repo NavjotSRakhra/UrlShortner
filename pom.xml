@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.navjotsrakhra</groupId>
     <artifactId>URLShortner</artifactId>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <name>URLShortner</name>
     <description>
         URL Shortner: A simple URL shortner service
@@ -85,6 +85,11 @@
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
             <version>5.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.blueconic</groupId>
+            <artifactId>browscap-java</artifactId>
+            <version>1.4.1</version>
         </dependency>
     </dependencies>
     <build>
