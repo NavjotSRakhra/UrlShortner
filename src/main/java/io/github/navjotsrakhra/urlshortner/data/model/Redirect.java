@@ -15,16 +15,40 @@ public class Redirect {
     private @Id UUID id;
     private @NotNull Instant redirectTime;
     private @NotNull String operatingSystem;
-    @ManyToOne
-    @JoinColumn(name = "traffic_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Traffic traffic;
 
-    public Redirect(Instant now, String operatingSystem) {
+    public Redirect(Instant now, String operatingSystem, Traffic traffic) {
         this.redirectTime = now;
         this.operatingSystem = operatingSystem;
+        this.traffic = traffic;
     }
 
     public Redirect() {
 
+    }
+
+    public Instant getRedirectTime() {
+        return redirectTime;
+    }
+
+    public void setRedirectTime(Instant redirectTime) {
+        this.redirectTime = redirectTime;
+    }
+
+    public String getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public void setOperatingSystem(String operatingSystem) {
+        this.operatingSystem = operatingSystem;
+    }
+
+    public Traffic getTraffic() {
+        return traffic;
+    }
+
+    public void setTraffic(Traffic traffic) {
+        this.traffic = traffic;
     }
 }

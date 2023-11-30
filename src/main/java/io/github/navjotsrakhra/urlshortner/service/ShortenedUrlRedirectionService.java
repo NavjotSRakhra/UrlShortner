@@ -1,29 +1,33 @@
 package io.github.navjotsrakhra.urlshortner.service;
 
+import com.blueconic.browscap.*;
+import io.github.navjotsrakhra.urlshortner.data.model.Redirect;
 import io.github.navjotsrakhra.urlshortner.data.model.UrlMapping;
-import io.github.navjotsrakhra.urlshortner.repository.TrafficRepository;
 import io.github.navjotsrakhra.urlshortner.repository.UrlMappingRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.net.URI;
+import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 public class ShortenedUrlRedirectionService {
     private final UrlMappingRepository urlMappingRepository;
-    private final TrafficRepository trafficRepository;
 
-    public ShortenedUrlRedirectionService(UrlMappingRepository urlMappingRepository, TrafficRepository trafficRepository) {
+    private final UserAgentParser parser;
+
+    public ShortenedUrlRedirectionService(UrlMappingRepository urlMappingRepository) throws IOException, ParseException {
         this.urlMappingRepository = urlMappingRepository;
-        this.trafficRepository = trafficRepository;
+        parser = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.PLATFORM));
     }
 
-    public ResponseEntity<Void> redirect(String key) {
+    public ResponseEntity<Void> redirect(String key, String userAgent) {
         var urlMapping = urlMappingRepository.findActiveByKey(key);
 
-        urlMapping.ifPresent(this::updateCount);
+        urlMapping.ifPresent(a -> updateCount(a, userAgent));
 
         return urlMapping.<ResponseEntity<Void>>map(
                         mapping -> ResponseEntity
@@ -40,10 +44,14 @@ public class ShortenedUrlRedirectionService {
                 );
     }
 
-    @Transactional
-    public void updateCount(UrlMapping urlMapping) {
+    public void updateCount(UrlMapping urlMapping, String userAgent) {
+        Capabilities capabilities = parser.parse(userAgent);
+
         var traffic = urlMapping.getTraffic();
-        traffic.visited("Unknown");
-        trafficRepository.save(traffic);
+        traffic.visited();
+        var redirect = new Redirect(Instant.now(), capabilities.getPlatform(), traffic);
+        traffic.getRedirects().add(redirect);
+
+        urlMappingRepository.save(urlMapping);
     }
 }

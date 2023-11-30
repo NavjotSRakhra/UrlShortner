@@ -3,7 +3,6 @@ package io.github.navjotsrakhra.urlshortner.data.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -14,7 +13,8 @@ public class Traffic {
     private @Id Long id;
     private @NotNull Long count;
 
-    @OneToMany(mappedBy = "traffic")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "redirect_id")
     private Set<Redirect> redirects;
 
     public Traffic() {
@@ -25,8 +25,19 @@ public class Traffic {
         return count;
     }
 
-    public void visited(String operatingSystem) {
+    public void setCount(Long count) {
+        this.count = count;
+    }
+
+    public void visited() {
         count++;
-        redirects.add(new Redirect(Instant.now(), operatingSystem));
+    }
+
+    public Set<Redirect> getRedirects() {
+        return redirects;
+    }
+
+    public void setRedirects(Set<Redirect> redirects) {
+        this.redirects = redirects;
     }
 }

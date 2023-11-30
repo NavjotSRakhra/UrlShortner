@@ -25,8 +25,7 @@ public class UrlMapping {
     private @NotNull Boolean permanent;
     private @NotNull Instant expiresAt;
     private @NotNull Instant createdAt; // Not to be initialized by the user
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "traffic_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private @NotNull Traffic traffic;
 
     public UrlMapping() {
