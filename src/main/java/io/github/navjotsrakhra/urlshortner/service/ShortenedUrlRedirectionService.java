@@ -21,7 +21,7 @@ public class ShortenedUrlRedirectionService {
 
     public ShortenedUrlRedirectionService(UrlMappingRepository urlMappingRepository) throws IOException, ParseException {
         this.urlMappingRepository = urlMappingRepository;
-        parser = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.PLATFORM));
+        parser = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.PLATFORM, BrowsCapField.PLATFORM_VERSION));
     }
 
     public ResponseEntity<Void> redirect(String key, String userAgent) {
@@ -49,7 +49,7 @@ public class ShortenedUrlRedirectionService {
 
         var traffic = urlMapping.getTraffic();
         traffic.visited();
-        var redirect = new Redirect(Instant.now(), capabilities.getPlatform(), traffic);
+        var redirect = new Redirect(Instant.now(), capabilities.getPlatform() + " " + capabilities.getPlatformVersion(), traffic);
         traffic.getRedirects().add(redirect);
 
         urlMappingRepository.save(urlMapping);
