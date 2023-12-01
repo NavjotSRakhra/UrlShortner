@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/static/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/static/index.html", true)
+                        .defaultSuccessUrl("/static/index.html")
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
                         .deleteCookies("JSESSIONID"));
