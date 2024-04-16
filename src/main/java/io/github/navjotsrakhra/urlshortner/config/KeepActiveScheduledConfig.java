@@ -16,7 +16,8 @@ public class KeepActiveScheduledConfig {
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     public void keepActive() {
         var url = System.getenv("base_url");
-
+        if (url == null)
+            return;
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(RequestConfig.DEFAULT).build()) {
             HttpGet get = new HttpGet(url);
             var response = httpClient.execute(get);
